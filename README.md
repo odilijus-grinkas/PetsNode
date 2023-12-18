@@ -14,5 +14,5 @@
 
 3. `/manage` - loads managePets.esj  
    3.1 `/manage/:id` - returns editor.esj after UPDATE is pressed on pet  
-     3.1.1 `/manage/:id/update` - PUT request when update is submitted button is pressed  
+         3.1.1 `/manage/:id/update` - PUT request when update is submitted button is pressed  
    3.2 `/manage/:id/delete` - DELETE request if "DELETE" button is pressed  
