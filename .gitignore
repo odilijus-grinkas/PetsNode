@@ -1,1 +1,3 @@
 node_modules
+public/images/*
+!public/images/no_picture.png
