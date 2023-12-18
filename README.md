@@ -9,8 +9,7 @@
 ## routes
 1. `/` - loads index.esj
 
-2. `/create` - loads createPet.esj
-
+2. `/create` - loads createPet.esj  
     2.1 `/create/:id` - POST request when form is submitted in createPet
 
 3. `/manage` - loads managePets.esj
