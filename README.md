@@ -6,7 +6,7 @@
 3. `managePets.esj` - displays a list of all pets. Each one has a button "UPDATE" and "DELETE" and another "add pet" button.
 4. `update.esj` - displays page for 1 pet that can be used to make updates (PUT requests). This is returned after "UPDATE" button is pressed.
 
-## routes
+## Routes
 1. `/` - loads index.esj  
 
 2. `/create` - loads createPet.esj  
