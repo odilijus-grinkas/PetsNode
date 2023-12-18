@@ -9,7 +9,7 @@
 ## routes
 1. / - loads index.esj
 2. /create - loads createPet.esj
-  2.1 /create/:id - POST request when form is submitted in createPet 
+    2.1 /create/:id - POST request when form is submitted in createPet 
 3. /manage - loads managePets.esj
    3.1 /manage/:id - returns editor.esj after UPDATE is pressed on pet
      3.1.1 /manage/:id/update - PUT request when update is submitted button is pressed
