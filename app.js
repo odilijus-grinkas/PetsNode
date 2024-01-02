@@ -1,8 +1,8 @@
 var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var path = require('path'); // less error-prone paths with path.join
+var cookieParser = require('cookie-parser'); // ?????
+var logger = require('morgan'); // for detailed logs
 const sql = require('mysql2/promise'); // sql promise version
 
 // Import routes

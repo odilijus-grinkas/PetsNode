@@ -1,0 +1,30 @@
+<%- include('layouts/header',{title: "Pet Manager"}) %>
+<body>
+  <a href="/" class="btn btn-secondary my-3 mx-3">Home</a>
+  <div class="container col-4">
+    <form action="/store" method="post" class="was-validated" enctype="multipart/form-data"> 
+      <input class="form-control my-1 mx-auto" type="text" name="name" placeholder="Pet's Name" required style="width:100%">
+      <input class=" my-1" type="text" name="email" placeholder="Pet's Email" style="width:100%; border-radius: 0.5em; padding: 0.3em 0.8em">
+      <div class="form-group my-1">
+        <label for="exampleFormControlSelect1">Pet's Species:</label>
+        <select class="custom-select" id="exampleFormControlSelect1" name="species" style="width:92px">
+          <option value="1">cat</option>
+          <option value="2">dog</option>
+          <div class="invalid-feedback"></div>
+        </select>
+      </div>
+      <!-- <input class="form-control my-2" type="file" name="foto" required> -->
+      <div class="custom-file my-2">
+        <label class="custom-file-label" for="customFile">Pet's Picture: </label>
+        <input type="file" class="custom-file-input" id="customFile" name="foto" required>
+     </div>
+      <input class="btn btn-primary" type="submit" style="display:block; width:100%">
+    </form>
+  </div>
+  <% if (typeof issue !== 'undefined' && issue) { %>
+    <div class="alert alert-warning my-3 col-6 offset-3" role="alert">
+      <%= issue %>
+    </div>
+  <% } %>
+</body>
+</html>
