@@ -1,4 +1,5 @@
 const Pets = require('../models/Pets');
+const Votes = require('../models/Votes');
 const fs = require('fs/promises'); // File management system for moving photos.
 
 function removeUpload(req){
@@ -7,8 +8,11 @@ function removeUpload(req){
   }
 }
 module.exports = {
-  index: function(req, res){
-    res.render('index');
+  index: async function(req, res){
+    // Add randomizer that selects which ids from getAllIds to pass to render
+    let [pets] = await Pets.getCombatants(req.con, 1, 2);
+    res.render('index',{pet1: pets[0], pet2: pets[1]});
+    // res.render('index');
   },
   manage: async function(req, res){
     let [petsList] = await Pets.getPets(req.con);
@@ -42,5 +46,10 @@ module.exports = {
       }
       res.redirect('/');
     }
+  },
+  vote: async function(req, res){
+    let param = req.params.id.slice(1).split('-'); // param[0] is the winner
+    Votes.addVote(req.con, param[0], param[1]);
+    res.redirect('/');
   }
 }

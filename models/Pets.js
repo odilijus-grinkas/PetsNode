@@ -5,7 +5,7 @@ module.exports = {
     return con.query("SELECT pets.id, species.name AS species, pets.name, foto, email, DATE(created_at) AS created_at FROM pets JOIN species ON species_id = species.id");
   },
   getCombatants: function(con, id1, id2){
-    return con.query("SELECT name, foto FROM pets WHERE id IN (?,?)", [id1, id2]);
+    return con.query("SELECT id, name, foto FROM pets WHERE id IN (?,?)", [id1, id2]);
   },
   getAllIds: function(con){
     return con.query("SELECT ID FROM pets");

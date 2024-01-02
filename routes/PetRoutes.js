@@ -19,6 +19,7 @@ router.get('/', PetControl.index);
 router.get('/manage', PetControl.manage);
 router.get('/create', PetControl.create);
 router.post('/store', upload.single('foto'), PetControl.store); 
+router.get('/vote/:id', PetControl.vote);
 
 module.exports = router;
 module.exports = router;

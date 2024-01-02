@@ -16,3 +16,5 @@
    3.1 `/manage/:id` - returns editor.esj after UPDATE is pressed on pet  
          3.1.1 `/manage/:id/update` - PUT request when update is submitted button is pressed  
    3.2 `/manage/:id/delete` - DELETE request if "DELETE" button is pressed  
+
+4. `/vote:petid1-petid2` - sent after a pet has been clicked. Adds vote where id1 is winner & id2 is loser.
