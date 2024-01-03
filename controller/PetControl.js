@@ -7,12 +7,30 @@ function removeUpload(req){
     fs.rm(req.file.path);
   }
 }
+async function pickTwoIds(con){
+  let [allId] = await Pets.getAllIds(con);
+  let idnums = [];
+  for (let e of allId){
+    idnums.push(e.ID);
+  }
+  let lastId = idnums[idnums.length-1]+1; //+1 because math.floor will return smaller number than the one provided
+  let picked = [];
+  while (picked.length<2){  
+    let random = Math.floor(Math.random()*lastId); // gives random number that's never a larger number than the last pet's id
+    for (let e of idnums){
+      if (random == e){
+        picked.push(e);
+        idnums[e-1] = null; // remove element from equation
+      }
+    }
+  }
+  return picked;
+}
 module.exports = {
   index: async function(req, res){
-    // Add randomizer that selects which ids from getAllIds to pass to render
-    let [pets] = await Pets.getCombatants(req.con, 1, 2);
+    let ids = await pickTwoIds(req.con);
+    let [pets] = await Pets.getCombatants(req.con, ids[0], ids[1]);
     res.render('index',{pet1: pets[0], pet2: pets[1]});
-    // res.render('index');
   },
   manage: async function(req, res){
     let [petsList] = await Pets.getPets(req.con);
