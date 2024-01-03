@@ -1,20 +1,27 @@
 <%- include('layouts/header',{title: "Pet Manager"}) %>
   <body>
     <h1 style="text-align: center;">VOTE THE CUTEST</h1>
-    <a href="/create" class="btn btn-primary">Add Pet</a>
-    <a href="/manage" class="btn btn-secondary">Manage Pets</a>
+    <div class="container mb-3">
+      <a href="/create" class="btn btn-primary mx-1">Add Pet</a>
+      <a href="/manage" class="btn btn-info">Manage Pets</a>
+      <a href="/stats" class="btn btn-success mx-1">Statistics</a>
+    </div>
+    <% if (typeof pet1 !== 'undefined') {%>
     <div class="container">
       <div class="row">
         <div class="col d-flex flex-column align-items-center">
           <h2><%=pet1.name%></h2>
-          <a href="/vote/:<%=pet1.id%>-<%=pet2.id%>"><img src="<%=pet1.foto%>" alt="asd" class="img-fluid mb-2"></a> 
+          <a href="/vote/:<%=pet1.id%>-<%=pet2.id%>"><img src="<%=pet1.foto%>" alt="pet pic" class="img-fluid mb-2" style="max-height: 500px"></a> 
         </div>
         <div class="col-3 d-flex flex-row align-items-center justify-content-center" style="font-size: 4em; color: red; text-align: center; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">VS</div>
         <div class="col d-flex flex-column align-items-center">
           <h2><%=pet2.name%></h2>
-          <a href="/vote/:<%=pet2.id%>-<%=pet1.id%>"><img src="<%=pet2.foto%>" class="img-fluid mb-2" alt="asd" ></a>
+          <a href="/vote/:<%=pet2.id%>-<%=pet1.id%>"><img src="<%=pet2.foto%>" alt="pet pic" class="img-fluid mb-2" style="max-height:500px"></a>
         </div>
       </div>
     </div>
+    <% } else {  %>
+      <h1 style="text-align: center;">You've voted for all available pet pairings, add more pets.</h1>
+    <% }%>
   </body>
 </html>

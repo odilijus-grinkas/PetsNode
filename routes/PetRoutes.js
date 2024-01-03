@@ -22,4 +22,3 @@ router.post('/store', upload.single('foto'), PetControl.store);
 router.get('/vote/:id', PetControl.vote);
 
 module.exports = router;
-module.exports = router;

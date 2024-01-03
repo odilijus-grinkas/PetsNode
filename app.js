@@ -4,12 +4,14 @@ var path = require('path'); // less error-prone paths with path.join
 var cookieParser = require('cookie-parser'); // ?????
 var logger = require('morgan'); // for detailed logs
 const sql = require('mysql2/promise'); // sql promise version
+const session = require('express-session'); // will be used in PetControl.index
 
 // Import routes
-var PetRoutes = require('./routes/PetRoutes');
+const PetRoutes = require('./routes/PetRoutes');
+const StatRoutes = require('./routes/StatRoutes');
 
 // App start
-var app = express();
+const app = express();
 
 // database connection setup
 const con = sql.createPool({
@@ -35,7 +37,17 @@ app.use((req, res, next)=>{
   next();
   });
 
+// Setup session
+app.use(session({
+  secret: Math.random()+"",
+  cookie: {maxAge: 24*60*60*1000},
+  saveUninitialized: true,
+  resave: false
+}))
+
+// Load routes
 app.use(PetRoutes);
+app.use(StatRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
