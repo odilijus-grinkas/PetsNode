@@ -12,13 +12,10 @@ async function maxedOutPairings(req){
   let [ids] = await Pets.getAllIds(req.con);
   let n = ids.length; // How many ids?
   let maxPairings;
-  if (n<2){
-    maxPairings = 1;
-  } else if (n<1){
+  if (n<1){
     maxPairings = 0;
   } else {
-    // Complicated formula that calculates the maximum number of unique pairings, cannot handle >150 ids :(
-    maxPairings = math.factorial(n)/(2*math.factorial(n-2));
+    maxPairings = n/2*(n-1);
   }
   // console.log("max pairings: " + maxPairings + " id number: " + ids.length);
   if (req.session.pairingsArray.length >= maxPairings){
@@ -92,7 +89,6 @@ module.exports = {
   },
   manage: async function(req, res){
     let [petsList] = await Pets.getPets(req.con);
-    console.log(petsList);
     res.render('manage',{pets: petsList});
   },
   create: async function(req, res){
@@ -118,8 +114,6 @@ module.exports = {
       try{
         if (req.body.newSpecies){
           let speciesId = await Pets.postSpecies(req.con, req.body);
-          console.log("________________________")
-          console.log(speciesId);
           req.body.species = speciesId;
         }
         let id = await Pets.postPet(req.con, req.body);

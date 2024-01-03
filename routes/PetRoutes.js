@@ -12,6 +12,7 @@ function filter(req, file, cb){
     cb(null, false);
   }
 }
+// Filesize limit set to 2mb, bigger images cause error that's handled in app.js error handler.
 const upload = multer({dest: 'upload', limits: {fileSize: 2 * 1024 * 1024}, fileFilter: filter}); 
 
 /* Make routes for pages */
