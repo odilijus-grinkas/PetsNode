@@ -2,13 +2,25 @@ module.exports = {
   // Full pet info, for managing
   getPets: function(con){
     // return con.query("SELECT id, species_id, name, foto, email, created_at FROM pets");
-    return con.query("SELECT pets.id, species.name AS species, pets.name, foto, email, DATE(created_at) AS created_at FROM pets JOIN species ON species_id = species.id");
+    return con.query("SELECT pets.id, species.name AS species, pets.name, foto, email, DATE(created_at) AS created_at FROM pets JOIN species ON species_id = species.id ORDER BY pets.id");
   },
   getCombatants: function(con, id1, id2){
     return con.query("SELECT id, name, foto FROM pets WHERE id IN (?,?)", [id1, id2]);
   },
   getAllIds: function(con){
     return con.query("SELECT ID FROM pets");
+  },
+  getSpecies: function(con){
+    return con.query("SELECT * FROM species");  
+  },
+  postSpecies: async function(con, body){
+    try{
+      await con.query("INSERT INTO species (name) VALUES (?)",[body.newSpecies]);
+      let [ids] = await con.query("SELECT id FROM species");
+      return ids[ids.length-1].id
+    } catch(err){
+      console.log(err);
+    }
   },
   // Expects a pet object containing: {name, email, species, foto}
   postPet: async function(con, pet){ 

@@ -21,14 +21,14 @@ async function maxedOutPairings(req){
     maxPairings = math.factorial(n)/(2*math.factorial(n-2));
   }
   // console.log("max pairings: " + maxPairings + " id number: " + ids.length);
-  if (req.session.arr.length >= maxPairings){
+  if (req.session.pairingsArray.length >= maxPairings){
     return true;
   } else {
     return false;
   };
 }
 function repeating(req){
-  let arr = req.session.arr;
+  let arr = req.session.pairingsArray;
   let repeating = false;
   for (let i = 0; i<arr.length; i++){
     for (let e = i+1; e<arr.length; e++){
@@ -66,21 +66,21 @@ async function pickTwoIds(con){
 }
 module.exports = {
   index: async function(req, res){
-    if (!req.session.arr){ // Create session array(of IDs) for new user
-      req.session.arr=[];
+    if (!req.session.pairingsArray){ // Create session array(of IDs) for new user
+      req.session.pairingsArray=[];
     }
     if(await maxedOutPairings(req)){
       res.render('index');
     } else {
       let ids = await pickTwoIds(req.con);
-      req.session.arr.push(ids);
+      req.session.pairingsArray.push(ids);
       while (repeating(req)){
-        req.session.arr.pop();
+        req.session.pairingsArray.pop();
         ids = await pickTwoIds(req.con);
-        req.session.arr.push(ids);
+        req.session.pairingsArray.push(ids);
       }
     console.log("Pet Pairings:")
-    console.log(req.session.arr);
+    console.log(req.session.pairingsArray);
     let [pets] = await Pets.getCombatants(req.con, ids[0], ids[1]);
     res.render('index',{pet1: pets[0], pet2: pets[1]});
     }
@@ -92,10 +92,14 @@ module.exports = {
   },
   manage: async function(req, res){
     let [petsList] = await Pets.getPets(req.con);
+    console.log(petsList);
     res.render('manage',{pets: petsList});
   },
   create: async function(req, res){
-    res.render('create');
+    let [allSpecies] = await Pets.getSpecies(req.con);
+    let oldIssue = req.session.issue;
+    delete req.session.issue; // must be deleted before sending response, else it remains in later requests.
+    res.render('create', {species: allSpecies, issue: oldIssue});
   },
   store: async function(req, res){
     if (req.body.name.length<2){
@@ -108,9 +112,16 @@ module.exports = {
     // }
     if (req.issue){
       removeUpload(req);
-      res.render('create', {issue: req.issue})
+      req.session.issue = req.issue;
+      res.redirect('/create');
     } else {
       try{
+        if (req.body.newSpecies){
+          let speciesId = await Pets.postSpecies(req.con, req.body);
+          console.log("________________________")
+          console.log(speciesId);
+          req.body.species = speciesId;
+        }
         let id = await Pets.postPet(req.con, req.body);
         let newPath = 'public/images/pet' + id + '.png';
         fs.rename(req.file.path, newPath);
@@ -123,6 +134,6 @@ module.exports = {
     }
   },
   delete: function (req, res){
-    // Include deleting removed pet's id from req.session.arr 
+    // Include deleting removed pet's id from req.session.pairingsArray 
   }
 }

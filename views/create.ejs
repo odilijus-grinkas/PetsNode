@@ -4,14 +4,19 @@
   <div class="container col-4">
     <form action="/store" method="post" class="was-validated" enctype="multipart/form-data"> 
       <input class="form-control my-1 mx-auto" type="text" name="name" placeholder="Pet's Name" required style="width:100%">
-      <input class=" my-1" type="text" name="email" placeholder="Pet's Email" style="width:100%; border-radius: 0.5em; padding: 0.3em 0.8em">
-      <div class="form-group my-1">
+      <input class=" my-1" type="text" name="email" placeholder="Pet's Email (optional)" style="width:100%; border-radius: 0.5em; padding: 0.3em 0.8em">
+      <div id="speciesSelect" class="form-group my-1">
         <label for="exampleFormControlSelect1">Pet's Species:</label>
         <select class="custom-select" id="exampleFormControlSelect1" name="species" style="width:92px">
-          <option value="1">cat</option>
-          <option value="2">dog</option>
-          <div class="invalid-feedback"></div>
+          <% for(let e of species) { %>
+          <option value="<%=e.id%>"><%=e.name%></option>
+          <% } %>
         </select>
+        <button type="button" id="speciesButton" class="btn btn-outline-info mx-3">Add new species</button>
+      </div>
+      <div id="speciesInput" style="display:none;">
+        <input type="text" name="newSpecies" placeholder="Name of Species" class="my-1 form-control" required disabled style="width:100%; border-radius: 0.5em; padding: 0.3em 0.8em">
+        <button id="backSpecies" type="button" class="btn btn-outline-info my-1">Pick Species Instead</button>
       </div>
       <!-- <input class="form-control my-2" type="file" name="foto" required> -->
       <div class="custom-file my-2">
@@ -26,5 +31,23 @@
       <%= issue %>
     </div>
   <% } %>
+  <script>
+    let button = document.getElementById('speciesButton');
+    let selector = document.getElementById('speciesSelect');
+    let input = document.getElementById('speciesInput');
+    let backSpecies = document.getElementById('backSpecies'); 
+
+    button.addEventListener('click',()=>{
+      selector.style.display = "none";
+      input.style.display = "block";
+      input.firstElementChild.disabled = false;
+      // input.disabled = false;
+    });
+    backSpecies.addEventListener('click',()=>{
+      input.firstElementChild.disabled = true;
+      input.style.display = "none";
+      selector.style.display = 'block';
+    });
+  </script>
 </body>
 </html>
