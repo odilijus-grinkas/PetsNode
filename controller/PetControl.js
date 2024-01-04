@@ -43,10 +43,10 @@ async function pickTwoIds(con){
   for (let e of allId){
     idnums.push(e.ID);
   }
-  let lastId = idnums[idnums.length-1]+1; //+1 because math.floor will return smaller number than the one provided
+  let numOfId = allId.length+1;
   let picked = [];
   while (picked.length<2){  
-    let random = Math.floor(Math.random()*lastId); // gives random number that's never a larger number than the last pet's id
+    let random = Math.floor(Math.random()*numOfId); // gives random number that's never a larger number than the last pet's id
     for (let i = 0; i<idnums.length; i++){
       if (random == idnums[i]){
         picked.push(idnums[i]);
@@ -73,7 +73,9 @@ module.exports = {
       req.session.pairingsArray=[];
     }
     if(await maxedOutPairings(req)){
-      res.render('index');
+      let stats = req.session.agreed;
+      delete req.session.agreed;
+      res.render('index',{agreed: stats});
     } else {
       let ids = await pickTwoIds(req.con);
       req.session.pairingsArray.push(ids);
@@ -94,7 +96,6 @@ module.exports = {
     let param = req.params.id.slice(1).split('-'); // param[0] is the winner
     await Votes.addVote(req.con, param[0], param[1]);
     let agrees = await Votes.agreed(req.con, param[0], param[1]);
-    console.log(agrees);
     let percent = findPercent(agrees.win, agrees.lose);
     req.session.agreed = percent;
     res.redirect('/');

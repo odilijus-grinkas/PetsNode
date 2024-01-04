@@ -33,21 +33,17 @@ INSERT INTO pets (species_id, name, foto, email, created_at) VALUES
 (1,'Joe','images/pet2.png','boppy@gmail.com','2022-10-19'),
 (1,'Scarlet','images/pet3.png','scarly@gmail.com','2022-12-19'),
 (1,'Johanson','images/pet4.png','Johan@gmail.com','2022-12-12'),
-(1,'Tony','images/pet5.png','Tony@gmail.com','2022-12-13'),
-(1,'Stark','images/pet6.png','starky@gmail.com','2022-12-14'),
-(2,'Hawk','images/pet7.png','eye@gmail.com','2022-12-15'),
-(2,'Reed','images/pet8.png','richard@gmail.com','2022-12-16'),
-(2,'Johnny','images/pet9.png','storm2@gmail.com','2022-12-16'),
-(2,'Sue','images/pet10.png','storm@gmail.com','2022-12-16'),
-(2,'Scooby','images/pet11.png','doo@gmail.com','2022-12-19'),
-(2,'Scrappy','images/pet12.png','dooby@gmail.com','2022-12-22');
+(2,'Hawk','images/pet5.png','eye@gmail.com','2022-12-15'),
+(2,'Reed','images/pet6.png','richard@gmail.com','2022-12-16'),
+(2,'Johnny','images/pet7.png','storm2@gmail.com','2022-12-16'),
+(2,'Sue','images/pet8.png','storm@gmail.com','2022-12-16');
 SET @counter = 1;
 WHILE @counter <= 10 DO
   INSERT INTO votes (pet1_id, pet2_id, result)
   SELECT
     t1.id AS pet1_id,
     t2.id AS pet2_id,
-    FLOOR(RAND() * 2) + 1 AS result
+    CASE WHEN RAND() < 0.5 THEN t1.id ELSE t2.id END AS result
   FROM
     (SELECT id FROM pets) AS t1
     JOIN (SELECT id FROM pets) AS t2
