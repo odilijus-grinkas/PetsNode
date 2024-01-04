@@ -41,3 +41,17 @@ INSERT INTO pets (species_id, name, foto, email, created_at) VALUES
 (2,'Sue','images/pet10.png','storm@gmail.com','2022-12-16'),
 (2,'Scooby','images/pet11.png','doo@gmail.com','2022-12-19'),
 (2,'Scrappy','images/pet12.png','dooby@gmail.com','2022-12-22');
+SET @counter = 1;
+WHILE @counter <= 10 DO
+  INSERT INTO votes (pet1_id, pet2_id, result)
+  SELECT
+    t1.id AS pet1_id,
+    t2.id AS pet2_id,
+    FLOOR(RAND() * 2) + 1 AS result
+  FROM
+    (SELECT id FROM pets) AS t1
+    JOIN (SELECT id FROM pets) AS t2
+    ON t1.id < t2.id;
+
+  SET @counter = @counter + 1;
+END WHILE;

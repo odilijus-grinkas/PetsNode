@@ -61,6 +61,12 @@ async function pickTwoIds(con){
   }
   return picked;
 }
+
+function findPercent(n1, n2){
+  result = n1 * 100 / (n1+n2);
+  return (Math.round(result * 10)/10)
+}
+
 module.exports = {
   index: async function(req, res){
     if (!req.session.pairingsArray){ // Create session array(of IDs) for new user
@@ -78,13 +84,19 @@ module.exports = {
       }
     console.log("Pet Pairings:")
     console.log(req.session.pairingsArray);
+    let stats = req.session.agreed;
+    delete req.session.agreed;
     let [pets] = await Pets.getCombatants(req.con, ids[0], ids[1]);
-    res.render('index',{pet1: pets[0], pet2: pets[1]});
+    res.render('index',{pet1: pets[0], pet2: pets[1], agreed: stats});
     }
   },
   vote: async function(req, res){
     let param = req.params.id.slice(1).split('-'); // param[0] is the winner
-    Votes.addVote(req.con, param[0], param[1]);
+    await Votes.addVote(req.con, param[0], param[1]);
+    let agrees = await Votes.agreed(req.con, param[0], param[1]);
+    console.log(agrees);
+    let percent = findPercent(agrees.win, agrees.lose);
+    req.session.agreed = percent;
     res.redirect('/');
   },
   manage: async function(req, res){

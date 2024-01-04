@@ -6,6 +6,11 @@
       <a href="/manage" class="btn btn-info">Manage Pets</a>
       <a href="/stats" class="btn btn-success mx-1">Statistics</a>
     </div>
+    <% if (typeof agreed !== 'undefined' && agreed) {%>
+    <div class="container" style="text-align: center;">
+      <%= agreed %>% of voters agreed with you.
+    </div>
+    <% }%>
     <% if (typeof pet1 !== 'undefined') {%>
     <div class="container">
       <div class="row">
