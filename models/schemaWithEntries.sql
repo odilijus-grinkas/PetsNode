@@ -37,13 +37,30 @@ INSERT INTO pets (species_id, name, foto, email, created_at) VALUES
 (2,'Reed','images/pet6.png','richard@gmail.com','2022-12-16'),
 (2,'Johnny','images/pet7.png','storm2@gmail.com','2022-12-16'),
 (2,'Sue','images/pet8.png','storm@gmail.com','2022-12-16');
+-- SET @counter = 1;
+-- WHILE @counter <= 10 DO
+--   INSERT INTO votes (pet1_id, pet2_id, result, created_at)
+--   SELECT
+--     t1.id AS pet1_id,
+--     t2.id AS pet2_id,
+--     CASE WHEN RAND() < 0.5 THEN t1.id ELSE t2.id END AS result,
+--     CURDATE() AS created_at
+--   FROM
+--     (SELECT id FROM pets) AS t1
+--     JOIN (SELECT id FROM pets) AS t2
+--     ON t1.id < t2.id;
+
+--   SET @counter = @counter + 1;
+-- END WHILE;
 SET @counter = 1;
-WHILE @counter <= 10 DO
-  INSERT INTO votes (pet1_id, pet2_id, result)
+
+WHILE @counter <= 60 DO
+  INSERT INTO votes (pet1_id, pet2_id, result, created_at)
   SELECT
     t1.id AS pet1_id,
     t2.id AS pet2_id,
-    CASE WHEN RAND() < 0.5 THEN t1.id ELSE t2.id END AS result
+    CASE WHEN RAND() < 0.5 THEN t1.id ELSE t2.id END AS result,
+    DATE_SUB(CURDATE(), INTERVAL (@counter % 30) DAY) AS created_at
   FROM
     (SELECT id FROM pets) AS t1
     JOIN (SELECT id FROM pets) AS t2

@@ -1,6 +1,8 @@
 <%- include('layouts/header',{title: "Pet Manager"}) %>
 <body>
-  <a href="/" class="btn btn-secondary my-3 mx-3">Home</a>
+  <div class="container">
+    <a href="/" class="btn btn-secondary my-3 mx-3">Home</a>
+  </div>
   <div class="container col-4">
     <form action="/store" method="post" class="was-validated" enctype="multipart/form-data"> 
       <input class="form-control my-1 mx-auto" type="text" name="name" placeholder="Pet's Name" required style="width:100%">

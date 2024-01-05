@@ -1,5 +1,53 @@
 <%- include('layouts/header',{title: "Pet Manager"}) %>
 <body>
-  <h1>stuff</h1>
+  <div class="container">
+    <a href="/" class="btn btn-secondary my-2">HOME</a>
+    <h1>STATS</h1>
+    <% if (typeof day !== 'undefined' && day) {%>
+      <div>
+        Most voted pet today: <%=day.name %> <img src="<%=day.foto%>" alt="pet pic" style="height:100px"> with <%=day.voteNum%> votes.
+      </div>
+    <% } %>
+
+    <% if (typeof week !== 'undefined' && week) {%>
+      <div>
+        Most voted pet this week: <%=week.name %> <img src="<%=week.foto%>" alt="pet pic" style="height:100px"> with <%=week.voteNum%> votes.
+      </div>
+    <% } %>
+
+    <% if (typeof month !== 'undefined' && month) {%>
+      <div>
+        Most voted pet this month: <%=month.name %> <img src="<%=month.foto%>" alt="pet pic" style="height:100px"> with <%=month.voteNum%> votes.
+      </div>
+    <% } %>
+
+    <% if (typeof speciesN !== 'undefined' && speciesN) {%>
+      <div>
+        <%for (let e of speciesN){%>
+          <div>
+            Total pets that are the <%=e.speciesName%> species: <%=e.speciesNum%>
+          </div>
+        <% } %>
+      </div>
+    <% } %>
+
+    <% if (typeof speciesW !== 'undefined' && speciesW) {%>
+      <div>
+        Species by number of votes:
+        <%for (let e of speciesW){%>
+          <div>
+            The species <%=e.name%> with <%=e.voteNum%> votes.
+          </div>
+        <% } %>
+      </div>
+    <% } %>
+
+    <% if (typeof bestPet !== 'undefined' && bestPet) {%>
+      <div>
+        Best pet of all time: <%=bestPet.name%> <img src="<%=bestPet.foto%>" alt="pet pic" style="height:100px"> with a total of <%=bestPet.voteNum%> votes.
+      </div>
+    <% } %>
+
+  </div>
 </body>
 </html>

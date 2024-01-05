@@ -1,5 +1,5 @@
 const Pets = require('../models/Pets');
-const Votes = require('../models/Votes');
+const Votes = require('../models/VotesAndStats');
 const fs = require('fs/promises'); // File management system for moving photos.
 const math = require('mathjs');
 
@@ -43,10 +43,10 @@ async function pickTwoIds(con){
   for (let e of allId){
     idnums.push(e.ID);
   }
-  let numOfId = allId.length+1;
+  let numOfId = allId.length+1; // +1 to compensate for Math.floor rounding downwards
   let picked = [];
   while (picked.length<2){  
-    let random = Math.floor(Math.random()*numOfId); // gives random number that's never a larger number than the last pet's id
+    let random = Math.floor(Math.random()*numOfId); // gives random number that's never a larger number than the number of ids
     for (let i = 0; i<idnums.length; i++){
       if (random == idnums[i]){
         picked.push(idnums[i]);
@@ -72,8 +72,8 @@ module.exports = {
     if (!req.session.pairingsArray){ // Create session array(of IDs) for new user
       req.session.pairingsArray=[];
     }
+    let stats = req.session.agreed;
     if(await maxedOutPairings(req)){
-      let stats = req.session.agreed;
       delete req.session.agreed;
       res.render('index',{agreed: stats});
     } else {
@@ -86,8 +86,7 @@ module.exports = {
       }
     console.log("Pet Pairings:")
     console.log(req.session.pairingsArray);
-    let stats = req.session.agreed;
-    delete req.session.agreed;
+    delete req.session.agreed; // Delete before sending response otherwise it will stay in the next request
     let [pets] = await Pets.getCombatants(req.con, ids[0], ids[1]);
     res.render('index',{pet1: pets[0], pet2: pets[1], agreed: stats});
     }
@@ -142,5 +141,8 @@ module.exports = {
   },
   delete: function (req, res){
     // Include deleting removed pet's id from req.session.pairingsArray 
+  },
+  update: function (req, res){
+    
   }
 }
