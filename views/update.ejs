@@ -1,0 +1,49 @@
+<%- include('layouts/header',{title: "Update Pet"}) %>
+  <div class="container">
+    <a href="/" class="btn btn-secondary my-3 mx-3">Home</a>
+  </div>
+  <form action="/put/<%= pet.id %>" method="post" class="d-flex flex-column mt-5 gap-2 offset-4 col-4">
+    <input type="hidden" name="_method" value="PUT">
+    <h1>EDIT PET</h1>
+    <div>Name</div>
+    <input type="text" name="name" value="<%= pet.name %>" required>
+    <div>Email</div>
+    <input type="text" name="email" value="<%= pet.email %>">
+    <div id="speciesSelect" class="form-group my-1">
+      <label for="exampleFormControlSelect1">Pet's Species:</label>
+      <select class="custom-select" id="exampleFormControlSelect1" name="species" style="width:92px">
+        <% for(let e of species) { %>
+        <option value="<%=e.id%>"><%=e.name%></option>
+        <% } %>
+      </select>
+      <button type="button" id="speciesButton" class="btn btn-outline-info mx-3">Add new species</button>
+    </div>
+    <div id="speciesInput" style="display:none;">
+      <input type="text" name="newSpecies" placeholder="Name of Species" class="my-1 form-control" required disabled style="width:100%; border-radius: 0.5em; padding: 0.3em 0.8em">
+      <button id="backSpecies" type="button" class="btn btn-outline-info my-1">Pick Species Instead</button>
+    </div>
+    <input type="text" name="oldSpecies" value="<%=pet.species_id%>" style="display: none">
+    <button type="submit" class="container col-4">Submit</button>
+  </form>
+
+  <script>
+    let button = document.getElementById('speciesButton');
+    let selector = document.getElementById('speciesSelect');
+    let input = document.getElementById('speciesInput');
+    let backSpecies = document.getElementById('backSpecies'); 
+
+    button.addEventListener('click',()=>{
+      selector.style.display = "none";
+      input.style.display = "block";
+      input.firstElementChild.disabled = false;
+      // input.disabled = false;
+    });
+    backSpecies.addEventListener('click',()=>{
+      input.firstElementChild.disabled = true;
+      input.style.display = "none";
+      selector.style.display = 'block';
+    });
+  </script>
+
+</body>
+</html>

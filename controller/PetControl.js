@@ -139,10 +139,32 @@ module.exports = {
       res.redirect('/');
     }
   },
-  delete: function (req, res){
-    // Include deleting removed pet's id from req.session.pairingsArray 
+  delete: async function (req, res){
+    try {
+    await fs.rm('public/images/pet'+req.params.id+".png");
+    } catch(err){
+      console.log(err);
+    }
+    await Pets.delete(req.con, req.params.id);
+    req.session.pairingsArray = [];
+    res.redirect('/manage');
   },
-  update: function (req, res){
-    
+  update: async function (req, res){
+    let id = req.params.id;
+    let myPet = await Pets.getOnePet(req.con, id);
+    let mySpecies = await Pets.getSpecies(req.con);
+    res.render('update',{pet: myPet[0], species: mySpecies[0]});
+  },
+  put: async function(req, res){
+    let id = +req.params.id;
+    let name = req.body.name;
+    let email = req.body.email;
+    let species = +req.body.species;
+    let oldSpecies = +req.body.oldSpecies;
+    if (req.body.newSpecies){
+      species = await Pets.postSpecies(req.con, req.body);
+    }
+    Pets.update(req.con, species, name, email, id, oldSpecies);
+    res.redirect('/manage');
   }
 }

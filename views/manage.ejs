@@ -25,12 +25,30 @@
           <td><img src="<%= e.foto %>" alt="pet pic" style="height: 80px"></td>
           <td><%= e.email %></td>
           <td><%= e.created_at.toString().slice(0,15) %></td>
-          <td><a href="/update/:<%=e.id%>" class="btn btn-outline-warning">UPDATE</i></a></td>
-          <td><a href="/delete/:<%=e.id%>" class="btn btn-outline-danger"><i class="bi bi-trash3"></i></a></td>
+          <td><a href="/update/<%=e.id%>" class="btn btn-outline-warning">UPDATE</i></a></td>
+          <td>
+            <!-- <a href="/delete/:<%=e.id%>" class="btn btn-outline-danger"><i class="bi bi-trash3"></i></a> -->
+            <form action="/delete/<%=e.id%>" method="POST">
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit" class="btn btn-outline-danger" onclick="petDelete(event,'<%=e.id%> <%= e.name%>')" ><i class="bi bi-trash3"></i></button>
+          </form>
+          </td>
+          
         </tr>
       <% } %>
     </tbody>
   </table>
 </div>
+<script>
+  const petDelete = (event, pet) => {
+    const confirmation = confirm("Are you sure you want to delete this pet: " + pet);
+    if (confirmation) {
+      // If the user clicks "OK," submit the form or perform other actions
+    } else {
+      event.preventDefault();
+      // If the user clicks "Cancel," do nothing
+    }
+  };
+</script>
 </body>
 </html>

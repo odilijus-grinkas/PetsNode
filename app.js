@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser'); // ?????
 var logger = require('morgan'); // for detailed logs
 const sql = require('mysql2/promise'); // sql promise version
 const session = require('express-session'); // will be used in PetControl.index
+const bodyParser = require('body-parser'); 
+const methodOverride = require('method-override');
 
 // Import routes
 const PetRoutes = require('./routes/PetRoutes');
@@ -19,6 +21,11 @@ const con = sql.createPool({
   user: "root",
   database: "PetsNode"
 })
+
+// Use body-parser middleware to parse request bodies, allows usage of methodOverride
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(methodOverride(req => req.body._method)); // enable usage of _method in views
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
