@@ -1,11 +1,11 @@
 <%- include('layouts/header',{title: "Pet Battles"}) %>
   <body>
-    <h1 style="text-align: center;">VOTE THE CUTEST</h1>
-    <div class="container mb-3">
-      <a href="/create" class="btn btn-primary mx-1">Add Pet</a>
-      <a href="/manage" class="btn btn-info">Manage Pets</a>
-      <a href="/stats" class="btn btn-success mx-1">Statistics</a>
+    <div class="container my-3">
+      <a href="/create" class="btn btn-outline-light mx-1">Add Pet</a>
+      <a href="/manage" class="btn btn-outline-light">Manage Pets</a>
+      <a href="/stats" class="btn btn-outline-light mx-1">Statistics</a>
     </div>
+    <h1 class="voting-text" style="text-align: center;">VOTE THE CUTEST</h1>
     <% if (typeof agreed !== 'undefined' && agreed) {%>
     <div class="container" style="text-align: center;">
       <%= agreed %>% of voters agreed with your vote.
@@ -16,17 +16,17 @@
       <div class="row">
         <div class="col d-flex flex-column align-items-center">
           <h2><%=pet1.name%></h2>
-          <a href="/vote/:<%=pet1.id%>-<%=pet2.id%>"><img src="<%=pet1.foto%>" alt="pet pic" class="img-fluid mb-2" style="max-height: 500px"></a> 
+          <a href="/vote/:<%=pet1.id%>-<%=pet2.id%>"><img src="<%=pet1.foto%>" alt="pet pic" class="img-fluid rounded mb-2"></a> 
         </div>
-        <div class="col-3 d-flex flex-row align-items-center justify-content-center" style="font-size: 4em; color: red; text-align: center; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">VS</div>
+        <div class="col-3 d-flex flex-row align-items-center justify-content-center"><img class="img-fluid mb-2 battle-img" src="/stylesheets/img/pvp.png" alt="VS"></div>
         <div class="col d-flex flex-column align-items-center">
           <h2><%=pet2.name%></h2>
-          <a href="/vote/:<%=pet2.id%>-<%=pet1.id%>"><img src="<%=pet2.foto%>" alt="pet pic" class="img-fluid mb-2" style="max-height:500px"></a>
+          <a href="/vote/:<%=pet2.id%>-<%=pet1.id%>"><img src="<%=pet2.foto%>" alt="pet pic" class="img-fluid rounded mb-2"></a>
         </div>
       </div>
     </div>
     <% } else {  %>
-      <h1 style="text-align: center;">You've seen all available pet pairings, add more pets.</h1>
+      <h2 style="text-align: center;">You've seen all available pet pairings, add more pets.</h2>
     <% }%>
   </body>
 </html>

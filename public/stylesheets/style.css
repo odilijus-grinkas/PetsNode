@@ -1,0 +1,11 @@
+.battle-img {
+    width: 150px;
+}
+
+.voting-text {
+    background: linear-gradient(to right, #F303FB 30%, #00e5ff 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+  
