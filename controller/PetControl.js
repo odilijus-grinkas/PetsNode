@@ -37,16 +37,27 @@ function repeating(req){
   }
   return repeating;
 }
+function findLargestId(arr){
+  let largest = arr[0];
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > largest ) {
+      largest = arr[i];
+    }
+  }
+  return largest;
+}
 async function pickTwoIds(con){
   let [allId] = await Pets.getAllIds(con);
   let idnums = [];
   for (let e of allId){
     idnums.push(e.ID);
   }
-  let numOfId = allId.length+1; // +1 to compensate for Math.floor rounding downwards
+  let largest = findLargestId(idnums)+1; // +1 to compensate for Math.floor rounding downwards
   let picked = [];
   while (picked.length<2){  
-    let random = Math.floor(Math.random()*numOfId); // gives random number that's never a larger number than the number of ids
+    let random = Math.floor(Math.random()*largest); // gives random number that's never a larger number than the largest id
+    console.log(picked);
     for (let i = 0; i<idnums.length; i++){
       if (random == idnums[i]){
         picked.push(idnums[i]);
