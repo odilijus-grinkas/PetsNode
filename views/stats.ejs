@@ -2,52 +2,78 @@
 <body>
   <div class="container">
     <a href="/" class="btn btn-secondary my-2">HOME</a>
-    <h1>STATS</h1>
-    <% if (typeof day !== 'undefined' && day) {%>
-      <div>
-        Most voted pet today: <%=day.name %> <img src="<%=day.foto%>" alt="pet pic" style="height:100px"> with <%=day.voteNum%> votes.
-      </div>
-    <% } %>
+    <h1 style="text-align: center; letter-spacing: 0.5em; font-size: 4em; font-family: Georgia, 'Times New Roman', Times, serif;"><span style="color:red">S</span><span style="color:cyan">T</span><span style="color:yellow">A</span><span style="color:green">T</span><span style="color:pink">S</span></h1>
+    <div class="col-6 offset-3">
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th colspan="4" style="text-align: center;"><h3>Most Voted Pets</h3></th>
+          </tr>
+        </thead>
+      <% if (typeof day !== 'undefined' && day) {%>
+        <tr>
+          <td>Most voted today:</td>
+          <td><%=day.name %> </td>
+          <td><img src="<%=day.foto%>" alt="pet pic" style="height:100px"> </td>
+          <td><%=day.voteNum%> votes</td>
+        </tr>
+      <% } %>
 
-    <% if (typeof week !== 'undefined' && week) {%>
-      <div>
-        Most voted pet this week: <%=week.name %> <img src="<%=week.foto%>" alt="pet pic" style="height:100px"> with <%=week.voteNum%> votes.
-      </div>
-    <% } %>
+      <% if (typeof week !== 'undefined' && week) {%>
+        <tr>
+          <td>Most voted this week:</td>
+          <td><%=week.name %> </td>
+          <td><img src="<%=week.foto%>" alt="pet pic" style="height:100px"> </td>
+          <td><%=week.voteNum%> votes</td>
+        </tr>
+      <% } %>
 
-    <% if (typeof month !== 'undefined' && month) {%>
-      <div>
-        Most voted pet this month: <%=month.name %> <img src="<%=month.foto%>" alt="pet pic" style="height:100px"> with <%=month.voteNum%> votes.
-      </div>
-    <% } %>
-
-    <% if (typeof speciesN !== 'undefined' && speciesN) {%>
-      <div>
-        <%for (let e of speciesN){%>
-          <div>
-            Total pets that are the <%=e.speciesName%> species: <%=e.speciesNum%>
-          </div>
-        <% } %>
-      </div>
-    <% } %>
-
-    <% if (typeof speciesW !== 'undefined' && speciesW) {%>
-      <div>
-        Species by number of votes:
-        <%for (let e of speciesW){%>
-          <div>
-            The species <%=e.name%> with <%=e.voteNum%> votes.
-          </div>
-        <% } %>
-      </div>
-    <% } %>
-
-    <% if (typeof bestPet !== 'undefined' && bestPet) {%>
-      <div>
-        Best pet of all time: <%=bestPet.name%> <img src="<%=bestPet.foto%>" alt="pet pic" style="height:100px"> with a total of <%=bestPet.voteNum%> votes.
-      </div>
-    <% } %>
-
+      <% if (typeof month !== 'undefined' && month) {%>
+        <tr>
+          <td>Most voted this month:</td>
+          <td><%=month.name %></td>
+          <td><img src="<%=month.foto%>" alt="pet pic" style="height:100px"></td>
+          <td><%=month.voteNum%> votes</td>
+        </tr>
+      <% } %>
+      <% if (typeof bestPet !== 'undefined' && bestPet) {%>
+        <tr>
+          <td>Most voted of all time:</td>
+          <td><%=bestPet.name%></td>
+          <td><img src="<%=bestPet.foto%>" alt="pet pic" style="height:100px"></td>
+          <td><%=bestPet.voteNum%> votes</td>
+        <tr>
+      <% } %>
+    </table>
   </div>
+<div class="offset-3 col-6">
+  <table class="table table-dark table-striped">
+    <thead>
+      <th colspan="2" style="text-align: center;"><h3>Number of Animals in Each Species</h3></th>
+    </thead>
+  <% if (typeof speciesN !== 'undefined' && speciesN) {%>
+    <%for (let e of speciesN){%>
+      <tr>
+        <td style="text-align: center;">Number of pets that are a <span style="font-weight: bold;"><%=e.speciesName%></span>: </td>
+        <td style="width: 200px; text-align: center;"><h3><%=e.speciesNum%></h3></td>
+      </tr>
+    <% } %>
+  <% } %>
+  </table>
+  <table class="table table-dark table-striped">
+    <% if (typeof speciesW !== 'undefined' && speciesW) {%>
+      <thead>
+        <th colspan="2" style="text-align: center;"><h3>Species by Number of Votes</h3></th>
+      </thead>
+        <%for (let e of speciesW){%>
+          <tr>
+            <td style="text-align: center;">Total votes for <span style="font-weight: bold;"><%=e.name%></span></td>
+            <td style="width: 300px;"><h3><%=e.voteNum%> votes.</h3></td>
+          </tr>
+        <% } %>
+    <% } %>
+  </table>
+</div>
+</div>
 </body>
 </html>

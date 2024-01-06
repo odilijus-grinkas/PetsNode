@@ -1,7 +1,6 @@
 module.exports = {
   // Full pet info, for managing
   getPets: function(con){
-    // return con.query("SELECT id, species_id, name, foto, email, created_at FROM pets");
     return con.query("SELECT pets.id, species.name AS species, pets.name, foto, email, DATE(created_at) AS created_at FROM pets JOIN species ON species_id = species.id ORDER BY pets.id");
   },
   getCombatants: function(con, id1, id2){
