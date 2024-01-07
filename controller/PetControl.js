@@ -57,7 +57,6 @@ async function pickTwoIds(con){
   let picked = [];
   while (picked.length<2){  
     let random = Math.floor(Math.random()*largest); // gives random number that's never a larger number than the largest id
-    console.log(picked);
     for (let i = 0; i<idnums.length; i++){
       if (random == idnums[i]){
         picked.push(idnums[i]);
