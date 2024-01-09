@@ -77,6 +77,12 @@ function findPercent(n1, n2){
   return (Math.round(result * 10)/10)
 }
 
+async function renameAndAddImage(req, id){
+  let newPath = 'public/images/pet' + id + '.png';
+  fs.rename(req.file.path, newPath);
+  await Pets.addPicture(req.con, newPath.slice(7), id);
+}
+
 module.exports = {
   index: async function(req, res){
     if (!req.session.pairingsArray){ // Create session array(of IDs) for new user
@@ -120,14 +126,14 @@ module.exports = {
     res.render('create', {species: allSpecies, issue: oldIssue});
   },
   store: async function(req, res){
-    if (req.body.name.length<2){
-      req.issue = "Pets shouldn't have 1 letter long names.";
-    } 
+    let name = req.body.name.trim()
+    if (name.length<1 || name.length>15){
+      req.issue = "Pet's name cannot be empty nor exceed 15 characters";
+    }
     // Commented out because form's required option makes this redundant.
     // else if (!req.file){
     //   // req.body.foto = null;
     //   req.issue = 'Pet picture is required.';
-    // }
     if (req.issue){
       removeUpload(req);
       req.session.issue = req.issue;
@@ -139,9 +145,7 @@ module.exports = {
           req.body.species = speciesId;
         }
         let id = await Pets.postPet(req.con, req.body);
-        let newPath = 'public/images/pet' + id + '.png';
-        fs.rename(req.file.path, newPath);
-        await Pets.addPicture(req.con, newPath.slice(7), id);
+        renameAndAddImage(req, id);
       } catch(err){
         console.log(err);
         res.sendStatus(500);
@@ -173,6 +177,9 @@ module.exports = {
     let oldSpecies = +req.body.oldSpecies;
     if (req.body.newSpecies){
       species = await Pets.postSpecies(req.con, req.body);
+    }
+    if (req.file){
+      renameAndAddImage(req, id);
     }
     Pets.update(req.con, species, name, email, id, oldSpecies);
     res.redirect('/manage');

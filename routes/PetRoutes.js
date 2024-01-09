@@ -23,6 +23,6 @@ router.post('/store', upload.single('foto'), PetControl.store);
 router.get('/vote/:id', PetControl.vote);
 router.delete('/delete/:id', PetControl.delete);
 router.get('/update/:id', PetControl.update);
-router.put('/put/:id', PetControl.put);
+router.post('/put/:id', upload.single('foto'), PetControl.put);
 
 module.exports = router;

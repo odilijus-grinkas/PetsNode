@@ -2,13 +2,16 @@
   <div class="container">
     <a href="/" class="btn btn-secondary my-3 mx-3">Home</a>
   </div>
-  <form action="/put/<%= pet.id %>" method="post" class="d-flex flex-column mt-5 gap-2 offset-4 col-4">
-    <input type="hidden" name="_method" value="PUT">
+  <form action="/put/<%= pet.id %>" method="post" class="d-flex flex-column mt-5 gap-2 offset-4 col-4" enctype="multipart/form-data">
+    <!-- <input type="hidden" name="_method" value="PUT"> -->
     <h1>EDIT PET</h1>
     <div>Name</div>
     <input type="text" name="name" value="<%= pet.name %>" required>
     <div>Email</div>
+    <!-- image -->
     <input type="text" name="email" value="<%= pet.email %>">
+    <div>Change Image</div>
+    <input type="file" class="custom-file-input" id="customFile" name="foto">
     <div id="speciesSelect" class="form-group my-1">
       <label for="exampleFormControlSelect1">Pet's Species:</label>
       <select class="custom-select" id="exampleFormControlSelect1" name="species" style="width:92px">

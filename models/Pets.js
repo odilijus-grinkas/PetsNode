@@ -36,6 +36,8 @@ module.exports = {
       } else {
         result = result[0][0];
       }
+      console.log('HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
+      console.log(pet);
       return result.id;
     } catch(err){
       console.log(err);
