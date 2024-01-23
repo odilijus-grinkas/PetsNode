@@ -19,6 +19,7 @@ const app = express();
 const con = sql.createPool({
   host: "localhost",
   user: "root",
+  password: 'root',
   database: "PetsNode"
 })
 

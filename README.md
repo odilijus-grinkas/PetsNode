@@ -1,3 +1,7 @@
+# INFO
+Run query in schemaWithEntries to create the database with entries present
+Line 19 in app.js assumes connection name 'root' and password 'root'
+
 # TODO:
 
 ## Views

@@ -16,12 +16,12 @@
       <div class="row">
         <div class="col d-flex flex-column align-items-center">
           <h2><%=pet1.name%></h2>
-          <a href="/vote/:<%=pet1.id%>-<%=pet2.id%>"><img src="<%=pet1.foto%>" alt="pet pic" class="img-fluid rounded mb-2"></a> 
+          <a href="/vote/:<%=pet1.id%>-<%=pet2.id%>"><img src="<%=pet1.foto%>" alt="pet pic" class="img-fluid rounded mb-2" style="height: 500px"></a> 
         </div>
         <div class="col-3 d-flex flex-row align-items-center justify-content-center"><img class="img-fluid mb-2 battle-img" src="/stylesheets/img/pvp.png" alt="VS"></div>
         <div class="col d-flex flex-column align-items-center">
           <h2><%=pet2.name%></h2>
-          <a href="/vote/:<%=pet2.id%>-<%=pet1.id%>"><img src="<%=pet2.foto%>" alt="pet pic" class="img-fluid rounded mb-2"></a>
+          <a href="/vote/:<%=pet2.id%>-<%=pet1.id%>"><img src="<%=pet2.foto%>" alt="pet pic" class="img-fluid rounded mb-2" style="height: 500px"></a>
         </div>
       </div>
     </div>
